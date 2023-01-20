@@ -1,0 +1,3 @@
+In the controllers 
+- We try to seperate our thoughts based on our requirements
+-

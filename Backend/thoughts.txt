@@ -1,0 +1,26 @@
+TO DO app 
+
+
+        title String
+        tasks [String]
+
+
+-Todos will give all the data of the respective todos
+CreateTodocontroller--
+getTodosController --- Shows all the ToDo
+getTodoController --one single todo
+
+deleteToDoController
+
+    // Here the todo is already present and we are modifying the tasks
+    ---Todotask is about an individual event in the total getTodoController
+    CreateTaskTodocontroller
+    deleteTaskTodoController
+
+
+
+
+Task
+-Create the task
+-Delete the task
+-Update the task
