@@ -16,9 +16,11 @@ const ToDoSchema = new Schema({
         type:String,
         required:true
     },
-    tasks:[String]
+    tasks:{
+        type:[String]
+    }
 })
 
-const TOdoModel = mongoose.model("ToDo" , TOdoSchema);
+const TOdoModel = mongoose.model("ToDo" , ToDoSchema);
 
 export default TOdoModel
