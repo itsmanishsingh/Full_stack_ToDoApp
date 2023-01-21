@@ -169,6 +169,7 @@ exports.createTask = async (req,res)=>{
         })
     }
 }
+
 exports.deleteTask = async (req,res)=>{
 
     try {
@@ -207,34 +208,46 @@ exports.deleteTask = async (req,res)=>{
     }
 }
 
+exports.getTasks = async (req,res)=>{
 
+    try {
+        const { todoid } = req.params
+        if(!todoid){
+            res.status(401).json({
+                success:false,
+                message:`Cannot find the task in the database`
+            })
+        }
+        const togettask = await Todo.findById(todoid)
+        res.status(201).json({
+            success:true,
+            message:`Task successfully fetched`,
+            tasks:togettask.tasks,
+            title:togettask.title
+        })
 
+        
+    } catch (error) {
+        res.status(401).json({
+            success:false,
+            message:error.message
+        })
+    }
+}
 
+// exports.sortTodo = async (req,res)=>{
 
+//     try {
+//         const { tosort } = req.query
+//         const 
 
+//     } catch (error) {
+//         res.status(400).json({
+//             success:false,
+//             message:error.message
+//         })
+//     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// export async function CreateTaskTodocontroller(req,res){
-
-//     const todoId = req.params.todoId;
-//     const todo = await TOdoModel.findById(todoId);
-//     if(!todo) return res.status(401).send(`No ToDo exists`)
-
-//     const {text} = req.body
-//     todo.tasks.push(text)
-//     await todo.save()
-//     req.json(todo)
 // }
+
+
