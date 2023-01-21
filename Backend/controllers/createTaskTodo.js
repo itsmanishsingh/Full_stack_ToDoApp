@@ -3,6 +3,10 @@
 const app = require("../app");
 const Todo = require("../model/todo");
 
+exports.home = (req,res)=>{
+    res.status(201).json(`Welcome to the home page of ToDoApp via controllers and routers`);
+}
+
 exports.createTodo = async (req,res)=>{
     try {
         const { title } = req.body;
