@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+const mongoose = require('mongoose');
 const connectToDB = require('../config/database')
 
 /* both the above and below codes are the same
@@ -14,13 +14,12 @@ const ToDoSchema = new Schema({
     // title : String,
     title:{
         type:String,
-        required:true
+        required:true,
+        unique:true
     },
     tasks:{
         type:[String]
     }
 })
 
-const TOdoModel = mongoose.model("ToDo" , ToDoSchema);
-
-export default TOdoModel
+module.exports = mongoose.model("Todo" , ToDoSchema);
