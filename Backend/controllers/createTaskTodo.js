@@ -1,5 +1,3 @@
-// import todo from "../model/todo";
-
 const app = require("../app");
 const Todo = require("../model/todo");
 
@@ -14,7 +12,7 @@ exports.createTodo = async (req,res)=>{
             // throw new Error(`Title is compulsory`);
             return res.status(401).json({
                 success:false,
-                message:'todo title is mandatory'
+                message:'todo tittle is mandatory'
             })
         }
         const todo = new Todo({
@@ -31,7 +29,7 @@ exports.createTodo = async (req,res)=>{
         }else{
             res.status(400).json({
                 success:false,
-                message:`Couldnot Save todo in the database`
+                message:`Couldnot Save todo in the Database`
             })
         }
         
@@ -43,18 +41,17 @@ exports.createTodo = async (req,res)=>{
     }
 };
 
-
 exports.deleteTodo = async (req,res)=>{
     try {
-        const {todoid} = req.params
+        const { todoid } = req.params
         if(!todoid){
             res.status(201).json({
                 success:false,
-                message:`Todo is not there in the database`
+                message:`Kindly provide the todo tittle`
             })
         }
 
-        const todeletetodo = await Todo.findByIdAndDelete({todoid})
+        const todeletetodo = await Todo.findByIdAndDelete({ todoid })
         if(!todeletetodo){
             res.status(400).json({
                 success:false,
@@ -68,14 +65,13 @@ exports.deleteTodo = async (req,res)=>{
             })
         }
         
-    } catch (error) {
+    }catch(error) {
         res.status(401).json({
             success:false,
             message:error.message
         })
     }
 }
-
 
 exports.edittodo = async (req,res)=>{
 
@@ -113,11 +109,9 @@ exports.edittodo = async (req,res)=>{
     }
 }
 
-
 exports.getTodo = async (req,res)=>{
-
     try {
-        const {todoid} = req.params
+        const { todoid } = req.params
         if(!todoid){
             res.status(401).json({
                 success:false,
@@ -137,7 +131,6 @@ exports.getTodo = async (req,res)=>{
             gettodo
         })
 
-
     } catch (error) {
         res.status(400).json({
             success:false,
@@ -147,18 +140,30 @@ exports.getTodo = async (req,res)=>{
 }
 
 exports.createTask = async (req,res)=>{
-
     try {
-        const {todoid} = req.params
+        const { todoid } = req.params
         const { task } = req.body
-        if(!todoid){
+        if( !todoid ){
             res.status(400).json({
-            message:`Couldnot find ${todoid}`
+            message:`Couldnot find ${ todoid }`
+            })
+        }
+        if( !task ){
+            // throw new Error(`Task is required `,400)
+            res.status(400).json({
+                message:`Task is empty`
+                })
+        }
+        
+        const todotask = await Todo.findById({ todoid });
+        if( !todotask ){
+            res.status(400).json({
+                success:false,
+                message:`The required title does not exist in the Database`
             })
         }
 
-        const todotask = await Todo.findById(todoid)
-        todotask.tasks.push(task)
+        todotask.tasks.push({ task })
         await todotask.save()
         res.status(201).json({
             success:true,
@@ -238,6 +243,21 @@ exports.getTasks = async (req,res)=>{
         })
     }
 }
+
+
+// function throwObjWithStacktrace() {
+//     const someError = {statusCode: 500}
+//     Error.captureStackTrace(someError)
+//     throw someError;
+// }
+
+// try {
+//     throwObjWithStacktrace();
+// } catch (err) {
+//     console.log(err);
+//     console.log(err.stack);
+// }
+
 
 // exports.sortTodo = async (req,res)=>{
 
