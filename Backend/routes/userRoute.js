@@ -11,13 +11,12 @@ const { createTodo,
 
 
 router.get('/',home)
-router.get('/gettodo',getTodo)
-router.put('/edittodo',edittodo)
 router.post('/createtodo',createTodo)
-router.post('/deletetodo',deleteTodo)
-router.post('/createtask',createTask)
-router.post('/deletetask',deleteTask)
-
+router.post('/createtask/:todoid',createTask)
+router.get('/gettodo/:todoid',getTodo)
+router.put('/edittodo',edittodo)
+router.delete('/deletetodo/:id',deleteTodo)
+router.delete('/deletetask/:id',deleteTask)
 
 
 module.exports = router;
