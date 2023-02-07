@@ -1,16 +1,15 @@
 const app = require("../app");
 const Todo = require("../model/todo");
 
-exports.home = (req,res)=>{
-    res.status(201).json(`Welcome to the home page of ToDoApp via controllers and routers`);
+exports.home = async (req,res)=>{
+    res.status(201).json(`Welcome to the home page of ToDoApp via Controllers and Routes`);
 }
 
 exports.createTodo = async (req,res)=>{
     try {
-        const { title } = req.body;
+        const { title } = req.body
         if(!title){
-            // throw new Error(`Title is compulsory`);
-            return res.status(401).json({
+            res.status(401).json({
                 success:false,
                 message:'todo tittle is mandatory'
             })
@@ -23,7 +22,7 @@ exports.createTodo = async (req,res)=>{
         if(response){
             res.status(201).json({
                 success:true,
-                message:`todo created successfully`,
+                message:`Todo Created successfully`,
                 todo
             })
         }else{
@@ -44,14 +43,16 @@ exports.createTodo = async (req,res)=>{
 exports.deleteTodo = async (req,res)=>{
     try {
         const { todoid } = req.params
-        if(!todoid){
-            res.status(201).json({
+        console.log(todoid)
+        if( ! todoid ){
+            // res.status(500).json({error: err})
+            res.status(500).json({
                 success:false,
-                message:`Kindly provide the todo tittle`
+                error:err
             })
         }
-
-        const todeletetodo = await Todo.findByIdAndDelete({ todoid })
+        console.log(`Hello`)
+        const todeletetodo = await Todo.findByIdAndDelete({ todoid:_id })
         if(!todeletetodo){
             res.status(400).json({
                 success:false,
@@ -68,7 +69,7 @@ exports.deleteTodo = async (req,res)=>{
     }catch(error) {
         res.status(401).json({
             success:false,
-            message:error.message
+            message:error.message,
         })
     }
 }
